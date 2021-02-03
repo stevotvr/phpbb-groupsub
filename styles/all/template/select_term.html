@@ -1,3 +1,39 @@
+{% if S_AJAX_REQUEST %}
+
+<form action="https://www.{% if S_PP_SANDBOX %}sandbox.{% endif %}paypal.com/cgi-bin/webscr" method="post">
+	<h3>{{ lang('GROUPSUB_CONFIRM', PKG_NAME) }}</h3>
+	<dl class="details">
+		<dt>{{ lang('GROUPSUB_SUBSCRIPTION') ~ lang('COLON') }}</dt>
+		<dd>{{ PKG_NAME }}</dd>
+		<dt>{{ lang('GROUPSUB_PRICE') ~ lang('COLON') }}</dt>
+		<dd>{{ TERM_PRICE }}</dd>
+		<dt>{{ lang('GROUPSUB_LENGTH') ~ lang('COLON') }}</dt>
+		<dd>{% if TERM_LENGTH %}{{ TERM_LENGTH }}{% else %}<b>{{ lang('GROUPSUB_LENGTH_UNLIMITED') }}</b>{% endif %}</dd>
+	</dl>
+	<hr>
+	<fieldset class="submit-buttons">
+{% if PP_ENABLED %}
+		<noscript><p class="error">{{ lang('GROUPSUB_JS_REQUIRED') }}</p></noscript>
+		<script>paypal_button_config = {{ PAYPAL_CONFIG|raw }};</script>
+		<div id="paypal-button-container"></div>
+		{% if not INCLUDED_PAYPALSDKJS %}
+			{% INCLUDEJS U_PPSDK %}
+			{% DEFINE INCLUDED_PAYPALSDKJS = true %}
+		{% endif %}
+		{% INCLUDEJS '@stevotvr_groupsub/paypal_buttons.js' %}
+{% endif %}
+		<a href="{{ U_ACTION }}" class="button2">{{ lang('CANCEL') }}</a>
+	</fieldset>
+
+	<fieldset id="paypal-success" style="display: none;">
+		<p>{{ lang('GROUPSUB_RETURN_MESSAGE', PKG_NAME, TERM_LENGTH) }}</p>
+	</fieldset>
+</form>
+
+
+{% else %}
+
+
 {% include 'overall_header.html' %}
 
 <form action="https://www.{% if S_PP_SANDBOX %}sandbox.{% endif %}paypal.com/cgi-bin/webscr" method="post">
@@ -108,3 +144,5 @@
 </form>
 
 {% include 'overall_footer.html' %}
+
+{% endif %}

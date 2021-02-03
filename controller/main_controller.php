@@ -291,6 +291,11 @@ class main_controller
 			'U_PPSDK'	=> $u_ppsdk,
 		));
 
+		if ($this->request->is_ajax())
+		{
+			confirm_box(false, ['GROUPSUB_CONFIRM', $term['package']->get_name()], '', 'select_term.html');
+		}
+
 		return $this->helper->render('@stevotvr_groupsub/select_term.html', $term['package']->get_name());
 	}
 }

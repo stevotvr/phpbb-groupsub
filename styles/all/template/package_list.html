@@ -20,6 +20,16 @@
 
 {% endif %}
 
+{% if package|length > 1 %}
+	<script>
+		var stevotvr_groupsub_term_href = '{{ U_ACTION }}?term_id=';
+		function stevotvr_groupsub_set_term_id(el, id)
+		{
+			document.getElementById(id).href = stevotvr_groupsub_term_href + el.value;
+		}
+	</script>
+{% endif %}
+
 {% for p in package %}
 
 <div class="panel bg{% if loop.index is odd %}1{% else %}2{% endif %}">
@@ -59,7 +69,7 @@
 		{% endfor %}
 	{% elseif p.term|length > COLLAPSE_TERMS %}
 					<p>
-						<select name="term_id">
+						<select name="term_id" onchange="stevotvr_groupsub_set_term_id(this, 'pkg{{ p.ID }}')">
 		{% for t in p.term %}
 							<option value="{{ t.ID }}">{{ t.PRICE }} / {% if t.LENGTH %}{{ t.LENGTH }}{% else %}{{ lang('GROUPSUB_LENGTH_UNLIMITED') }}{% endif %}</option>
 		{% endfor %}
@@ -68,15 +78,15 @@
 	{% else %}
 					<p>
 		{% for t in p.term %}
-						<label><input type="radio" name="term_id" value="{{ t.ID }}">{{ t.PRICE }} / {% if t.LENGTH %}{{ t.LENGTH }}{% else %}<b>{{ lang('GROUPSUB_LENGTH_UNLIMITED') }}</b>{% endif %}</label><br>
+						<label><input type="radio" name="term_id" value="{{ t.ID }}" onclick="stevotvr_groupsub_set_term_id(this, 'pkg{{ p.ID }}')">{{ t.PRICE }} / {% if t.LENGTH %}{{ t.LENGTH }}{% else %}<b>{{ lang('GROUPSUB_LENGTH_UNLIMITED') }}</b>{% endif %}</label><br>
 		{% endfor %}
 					</p>
 	{% endif %}
 	{% if p.S_ACTIVE %}
 					<p{% if p.S_WARNING %} style="color: #f00"{% endif %}>{% if p.EXPIRES %}{{ lang('GROUPSUB_SUBSCRIBED_UNTIL', p.EXPIRES) }}{% else %}{{ lang('GROUPSUB_SUBSCRIBED') }}{% endif %}</p>
-					{% if p.EXPIRES %}<input class="button1" type="submit" name="submit" value="{{ lang('GROUPSUB_RENEW') }}">{% endif %}
+					{% if p.EXPIRES %}<a id="pkg{{ p.ID }}" href="{{ U_ACTION }}{% if p.term|length == 1 %}?term_id={{ p.term[0].ID }}{% endif %}" class="button1" data-ajax="true" data-refresh="true">{{ lang('GROUPSUB_RENEW') }}</a>{% endif %}
 	{% else %}
-					<input class="button1" type="submit" name="submit" value="{{ lang('GROUPSUB_SUBSCRIBE') }}">
+					<a id="pkg{{ p.ID }}" href="{{ U_ACTION }}{% if p.term|length == 1 %}?term_id={{ p.term[0].ID }}{% endif %}" class="button1" data-ajax="true" data-refresh="true">{{ lang('GROUPSUB_SUBSCRIBE') }}</a>
 	{% endif %}
 				</fieldset>
 			</form>
