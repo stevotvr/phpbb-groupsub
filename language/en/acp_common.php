@@ -41,4 +41,6 @@ $lang = array_merge($lang, array(
 	'ACP_GROUPSUB_PKG'	=> 'Package',
 	'ACP_GROUPSUB_USER'	=> 'Subscriber',
 	'ACP_GROUPSUB_SUB'	=> 'Subscription',
+
+	'ACP_GROUPSUB_ITEMS_PER_PAGE'	=> 'Items per page',
 ));

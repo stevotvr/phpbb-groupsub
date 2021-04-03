@@ -68,7 +68,6 @@ $lang = array_merge($lang, array(
 	'ACP_GROUPSUB_ACTIVE'			=> 'Active',
 	'ACP_GROUPSUB_ENDED'			=> 'Ended',
 	'ACP_GROUPSUB_ALL_PACKAGES'		=> 'All subscription packages',
-	'ACP_GROUPSUB_SUBS_PER_PAGE'	=> 'Items per page',
 	'ACP_GROUPSUB_DELETED'			=> 'deleted',
 
 	'ACP_GROUPSUB_ERROR_NO_PKGS'		=> 'There are no packages for which to create a subscription.',

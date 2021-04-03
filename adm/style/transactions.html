@@ -47,7 +47,7 @@
 {% endfor %}
 		</select>
 {% if pagination %}
-		{{ lang('ACP_GROUPSUB_TRANS_PER_PAGE') ~ lang('COLON') }}
+		{{ lang('ACP_GROUPSUB_ITEMS_PER_PAGE') ~ lang('COLON') }}
 		<input class="inputbox autowidth" type="number" name="limit" id="limit" min="0" max="100" value="{{ LIMIT }}">
 {% endif %}
 		<input class="button2" type="submit" name="sort" value="{{ lang('GO') }}">
